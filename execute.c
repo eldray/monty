@@ -40,7 +40,7 @@ int execute(char *content, stack_t **stack, unsigned int counter, FILE *file)
 	if (strcmp(op, opst[i].opcode) == 0)
 	{	opst[i].f(stack, counter);
 		return (0);
-	}i++;}
+	} i++; }
 	if (op && opst[i].opcode == NULL)
 	{ fprintf(stderr, "L%d: unknown instruction %s\n", counter, op);
 	fclose(file);
