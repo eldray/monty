@@ -1,53 +1,52 @@
 #include "monty.h"
 
+glob_t glob;
+
 /**
- * main - Main
- *
- * @argc: Number of args
- * @argv: Command line args
- *
- * Return: Void
+ *  stack_init - initialize all the things
+ *  @head: top of stack data structure
  */
-
-int main(int argc, char *argv[])
+void stack_init(stack_t **head)
 {
-	stack_t *head = NULL;
-	char  *str = NULL, *operator_array[2], *temp;
-	size_t bufsize = 1024, line_count = 0;
-	ssize_t get_line;
-	void (*operator_function)(stack_t **stack, unsigned int line_number);
+	*head = NULL;
+	glob.top = head;
+}
 
-	if (argc != 2)
-	fprintf(stderr, "USAGE: monty file\n"), exit(EXIT_FAILURE);
-	file = fopen(argv[1], "r");
-	if (file == NULL)
-	fprintf(stderr, "Error: Can't open file %s\n", argv[1]), exit(EXIT_FAILURE);
-	while (1)
+/**
+ * free_all - free all malloc'ed memory
+ * note: this is available "atexit", starting at
+ * getline loop
+ */
+void free_all(void)
+{
+	stack_t *tmp1, *tmp2 = NULL;
+
+	tmp1 = *(glob.top);
+	/* printf("glob.top->%p\n",  (void*)glob.top); */
+	while (tmp1 != NULL)
 	{
-		get_line = getline(&str, &bufsize, file);
-		if (get_line == -1)
-		break;
-		line_count++;
-		operator_array[0] = strtok(str, "\n ");
-		if (operator_array[0] == NULL)
-		get_nop(&head, line_count);
-		else if (strcmp("push", operator_array[0]) == 0)
-		{
-			temp = strtok(NULL, "\n ");
-			get_push(&head, line_count, temp);
-		}
-		else if (operator_array[0] != NULL && operator_array[0][0] != '#')
-		{
-			operator_function = go(operator_array[0], line_count, &head);
-
-			if (operator_function == NULL && line_count == 0)
-			{
-				fprintf(stderr, "L%ld: unknown instruction %s\n",
-				line_count, operator_array[0]), exit(EXIT_FAILURE);
-			}
-			operator_function(&head, line_count);
-		}
+		tmp2 = tmp1->next;
+		free(tmp1);
+		tmp1 = tmp2;
 	}
-	fclose(file), free(str), get_free(head);
-	return (0);
+}
+
+/**
+ * main - monty bytecode interpreter
+ * @argc: number of command line arguments
+ * @argv: array of strings containing the comm line args
+ * Return: EXIT_SUCCESS or EXIT_FAILURE!!!
+ */
+int main(int argc, char **argv)
+{
+	stack_t *head;
+
+	stack_init(&head);
+	if (argc != 2)
+	{
+		printf("USAGE: monty file\n");
+		exit(EXIT_FAILURE);
+	}
+	process_file(argv[1], &head);
+	exit(EXIT_SUCCESS);
 }
