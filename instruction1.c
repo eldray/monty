@@ -15,15 +15,12 @@ void instruction_push(stack_t **stack, unsigned int line_number)
 	if (element == NULL)
 	{
 		printf("Error: malloc failed\n");
-		fclose(file);
-		get_free(*stack);
 		exit(EXIT_FAILURE);
 	}
 	op = strtok(NULL, DELIMS);
 	if (op == NULL || stack == NULL)
 	{
 		printf("L%u: usage: push integer\n", line_number);
-		fclose(file);
 		exit(EXIT_FAILURE);
 	}
 		num = _strtol(op, line_number);
@@ -65,8 +62,6 @@ void instruction_pint(stack_t **stack, unsigned int line_number)
 	if (stack == NULL || *stack == NULL)
 	{
 		printf("L%u: can't pint, stack empty\n", line_number);
-		fclose(file);
-		get_free(*stack);
 		exit(EXIT_FAILURE);
 	}
 	printf("%d\n", (*stack)->n);
@@ -85,8 +80,6 @@ void instruction_pop(stack_t **stack, unsigned int line_number)
 	if (stack == NULL || *stack == NULL)
 	{
 		printf("L%u: can't pop an empty stack\n", line_number);
-		fclose(file);
-		get_free(*stack);
 		exit(EXIT_FAILURE);
 	}
 	node  = *stack;
@@ -107,8 +100,6 @@ void instruction_swap(stack_t **stack, unsigned int line_number)
 	if (!(*stack) || !((*stack)->next))
 	{
 		printf("L%u: can't swap, stack too short\n", line_number);
-		fclose(file);
-		get_free(*stack);
 		exit(EXIT_FAILURE);
 	}
 	tmp = (*stack)->next;

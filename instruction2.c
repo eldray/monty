@@ -13,8 +13,6 @@ void instruction_add(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL || (*stack)->next == NULL)
 	{
 		printf("L%u: can't add, stack too short\n", line_number);
-		fclose(file);
-		free(*stack);
 		exit(EXIT_FAILURE);
 	}
 
@@ -48,8 +46,6 @@ void instruction_sub(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL || (*stack)->next == NULL)
 	{
 		printf("L%u: can't sub, stack too short\n", line_number);
-		fclose(file);
-		get_free(*stack);
 		exit(EXIT_FAILURE);
 	}
 
@@ -71,16 +67,12 @@ void instruction_div(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL || (*stack)->next == NULL)
 	{
 		printf("L%u: can't div, stack too short\n", line_number);
-		fclose(file);
-		free(*stack);
 		exit(EXIT_FAILURE);
 	}
 	tmp = (*stack)->n;
 	if (tmp == 0)
 	{
 		printf("L%u: division by zero\n", line_number);
-		fclose(file);
-		get_free(*stack);
 		exit(EXIT_FAILURE);
 	}
 		instruction_pop(stack, line_number);
@@ -100,7 +92,6 @@ void instruction_mul(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL || (*stack)->next == NULL)
 	{
 		printf("L%u: can't mul, stack too short\n", line_number);
-		fclose(file);
 		exit(EXIT_FAILURE);
 	}
 
