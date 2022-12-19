@@ -16,9 +16,9 @@ void instruction_add(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-		tmp = (*stack)->n;
-		instruction_pop(stack, line_number);
-		(*stack)->n += tmp;
+	tmp = (*stack)->n;
+	instruction_pop(stack, line_number);
+	(*stack)->n += tmp;
 }
 
 /**
@@ -75,8 +75,8 @@ void instruction_div(stack_t **stack, unsigned int line_number)
 		printf("L%u: division by zero\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-		instruction_pop(stack, line_number);
-		(*stack)->n /= tmp;
+	instruction_pop(stack, line_number);
+	(*stack)->n /= tmp;
 }
 
 /**
@@ -95,7 +95,7 @@ void instruction_mul(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-		tmp = (*stack)->n;
-		instruction_pop(stack, line_number);
-		(*stack)->n *= tmp;
+	tmp = (*stack)->n;
+	instruction_pop(stack, line_number);
+	(*stack)->n *= tmp;
 }

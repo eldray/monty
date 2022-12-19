@@ -47,7 +47,6 @@ void instruction_pall(stack_t **stack, unsigned int line_number)
 	{
 		printf("%d\n", element->n);
 		element = element->next;
-		printf("\n");
 	}
 }
 
