@@ -1,7 +1,6 @@
 #include "monty.h"
 
 glob_t glob;
-
 /**
  *  stack_init - initialize all the things
  *  @head: top of stack data structure

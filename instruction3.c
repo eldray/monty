@@ -91,7 +91,8 @@ void instruction_rotl(stack_t **stack, unsigned int line_number)
 		return;
 	new_top = (*stack)->next;
 	new_top->prev = NULL;
-		while (tmp->next != NULL)
+
+	while (tmp->next != NULL)
 	tmp = tmp->next;
 	tmp->next = *stack;
 	(*stack)->next = NULL;
