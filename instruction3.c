@@ -13,6 +13,8 @@ void instruction_mod(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL || (*stack)->next == NULL)
 	{
 		printf("L%u: can't mod, stack too short\n", line_number);
+		fclose(file);
+		get_free(*stack);
 		exit(EXIT_FAILURE);
 	}
 
@@ -20,6 +22,7 @@ void instruction_mod(stack_t **stack, unsigned int line_number)
 	if (tmp == 0)
 	{
 		printf("L%u: division by zero\n", line_number);
+		fclose(file);
 		exit(EXIT_FAILURE);
 	}
 	instruction_pop(stack, line_number);
@@ -39,12 +42,15 @@ void instruction_pchar(stack_t **stack, unsigned int line_number)
 	if (*stack == NULL)
 	{
 		printf("L%u: can't pchar, stack empty\n", line_number);
+		fclose(file);
+		get_free(*stack);
 		exit(EXIT_FAILURE);
 	}
 	i = (*stack)->n;
 	if (!(i >= 0 && i <= 127))
 	{
 		printf("L%u: can't pchar, value out of range", line_number);
+		fclose(file);
 		exit(EXIT_FAILURE);
 	}
 	putchar(i);
